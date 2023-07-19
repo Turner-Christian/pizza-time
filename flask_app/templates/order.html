@@ -10,11 +10,11 @@
 <body class="container-md">
     <header class="d-flex justify-content-between">
         <h1 class="px-4">PIZZA PETE'S</h1>
-        <h3 class="d-flex text-center">{{user.first_name}}</h3>
+        <h3 class="d-flex text-center"></h3>
         <nav class="d-flex align-items-center">
             <a href="/home" class="border p-1 text-decoration-none">HOME</a>
             <a href="/cart" class="border p-1 text-white bg-info text-decoration-none">ORDER(<span>{{order_count}}</span>)</a>
-            <a href="#" class="border p-1 text-decoration-none">ACCOUNT</a>
+            <a href="/account" class="border p-1 text-decoration-none">ACCOUNT</a>
             <a href="/logout" class="border p-1 text-decoration-none">LOGOUT</a>
         </nav>
     </header>
@@ -58,47 +58,26 @@
                 <label for="toppings">TOPPINGS:</label>
                 <div class="topping-container border p-5">
                     <div>
+                        <!-- JS FOR SUPRISE ME -->
                         <div class="d-flex justify-content-between border rounded p-2">
                             <label for="cheese">CHEESE</label>
-                            <input type="checkbox" id="cheese" name="cheese" value="0">
+                            <input type="checkbox" id="cheese" name="cheese">
                         </div>
                         <div class="d-flex justify-content-between border rounded p-2">
                             <label for="pepperoni">PEPPERONI</label>
-                            <input type="checkbox" id="pepperoni" name="pepperoni" value="0">
+                            <input type="checkbox" id="pepperoni" name="pepperoni">
                         </div>
                         <div class="d-flex justify-content-between border rounded p-2">
                             <label for="mushroom">MUSHROOM</label>
-                            <input type="checkbox" id="mushroom" name="mushroom" value="0">
+                            <input type="checkbox" id="mushroom" name="mushroom">
                         </div>
                         <div class="d-flex justify-content-between border rounded p-2">
                             <label for="sausage">SAUSAGE</label>
-                            <input type="checkbox" id="sausage" name="sausage" value="0">
+                            <input type="checkbox" id="sausage" name="sausage">
                         </div>
                         <div class="d-flex justify-content-between border rounded p-2">
                             <label for="onion">ONION</label>
-                            <input type="checkbox" id="onion" name="onion" value="0">
-                        </div>
-                    </div>
-                    <div>
-                        <div class="d-flex justify-content-between border rounded p-2">
-                            <label for="black_olives">BLACK-OLIVES</label>
-                            <input type="checkbox" id="black_olives" name="toppings" value="black_olives">
-                        </div>
-                        <div class="d-flex justify-content-between border rounded p-2">
-                            <label for="green_pepper">GREEN-PEPPER</label>
-                            <input type="checkbox" id="green_pepper" name="toppings" value="green_pepper">
-                        </div>
-                        <div class="d-flex justify-content-between border rounded p-2">
-                            <label for="fresh_garlic">FRESH-GARLIC</label>
-                            <input type="checkbox" id="fresh_garlic" name="toppings" value="fresh_garlic">
-                        </div>
-                        <div class="d-flex justify-content-between border rounded p-2">
-                            <label for="tomato">TOMATO</label>
-                            <input type="checkbox" id="tomato" name="toppings" value="tomato">
-                        </div>
-                        <div class="d-flex justify-content-between border rounded p-2">
-                            <label for="basil">BASIL</label>
-                            <input type="checkbox" id="basil" name="toppings" value="basil">
+                            <input type="checkbox" id="onion" name="onion">
                         </div>
                     </div>
                 </div>

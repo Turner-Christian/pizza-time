@@ -30,6 +30,27 @@ class User:
         return MySQLConnection(cls.DB).query_db(query, data)
     
     @classmethod
+    def update_user(cls, data):
+        query = """
+        UPDATE users
+        SET
+        first_name=%(first_name)s,
+        last_name=%(last_name)s,
+        email=%(email)s,
+        address=%(address)s,
+        city=%(city)s,
+        state=%(state)s,
+        updated_at = NOW()
+        WHERE id = %(id)s;
+        """
+        result =  MySQLConnection(cls.DB).query_db(query, data)
+        print(result)
+        if result:
+            return result
+        else:
+            return None
+
+    @classmethod
     def find_user(cls, data):
         query = """
         SELECT * FROM users WHERE email = %(email)s;
@@ -61,6 +82,26 @@ class User:
         result = MySQLConnection(cls.DB).query_db(query,data)
         # print(result)
         return cls(result[0])
+
+    @classmethod
+    def get_favorite_pizza(cls,data):
+        query = """
+        SELECT favorite_pizza_id
+        FROM users
+        WHERE id = %(id)s
+        """
+        result = MySQLConnection(cls.DB).query_db(query,data)
+        return result[0]
+
+    @classmethod
+    def update_favorite_pizza(cls, data):
+        query = """
+        UPDATE users
+        SET
+        favorite_pizza_id = %(pizza_id)s
+        WHERE id = %(user_id)s;
+        """
+        return MySQLConnection(cls.DB).query_db(query, data)
 
     @staticmethod
     def user_vald(input):

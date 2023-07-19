@@ -9,30 +9,52 @@
 <body class="container-md">
     <header class="d-flex justify-content-between">
         <h1>PIZZA PETE'S</h1>
-        <h3 class="d-flex align-items-center">{{user.first_name}}</h3>
+        <h3 class="d-flex align-items-center"></h3>
         <nav class="d-flex align-items-center">
             <a href="" class="border p-1 text-white bg-info text-decoration-none">HOME</a>
             <a href="/cart" class="border p-1 text-decoration-none">ORDER(<span>{{order_count}}</span>)</a>
-            <a href="#" class="border p-1 text-decoration-none">ACCOUNT</a>
+            <a href="/account" class="border p-1 text-decoration-none">ACCOUNT</a>
             <a href="/logout" class="border p-1 text-decoration-none">LOGOUT</a>
         </nav>
     </header>
     <container>
         <h2 class="mt-5 text-center">QUICK OPTIONS</h2>
         <div class="d-flex justify-content-around mt-3">
-            <div class="card w-100 mx-2">
+            <div class="card w-100 mx-2 border border-3">
                 <p></p>
                 <div class="text-center mt-3 mb-3">
-                    <a class="btn bg-info text-light" href="/order">NEW ORDER</a>
+                    <strong class="fs-1 text-center text-warning">Hungry?</strong>
+                    <br>
+                    <strong class="fs-3 text-center">Create your own pizza!</strong>
+                    <a class="btn bg-info text-light mt-5" href="/order">NEW ORDER</a>
                 </div>
             </div>
-            <div class="card w-100 mx-2">
-                <p></p>
-                <div class="text-center mt-3 mb-3">
-                    <a class="btn bg-info text-light" href="/order">RE-ORDER MY FAVE</a>
-                </div>
+            <div class="card w-100 mx-2 border border-3">
+                <form action="" class="text-center mt-3 mb-3">
+                    {% for pizza in fav_pizza_object %}
+                    <ul class="list-unstyled card m-4">
+                        {{pizza.size.capitalize()}}
+                            {% if pizza.cheese == 'on' %}
+                                <li>Cheese</li> 
+                            {% endif %}
+                            {% if pizza.pepperoni == 'on' %}
+                                <li>Pepperoni</li>
+                            {% endif %}
+                            {% if pizza.mushroom == 'on' %}
+                                <li>Mushroom</li>
+                            {% endif %}
+                            {% if pizza.sausage == 'on' %}
+                                <li>Sausage</li> 
+                            {% endif %}
+                            {% if pizza.onion == 'on' %}
+                                <li>Onion</li> 
+                            {% endif %}
+                        </ul>
+                {% endfor %}
+                <a class="btn bg-info text-light" href="/order">RE-ORDER MY FAVORITE</a>
+            </form>
             </div>
-            <div class="card w-100 mx-2">
+            <div class="card w-100 mx-2 border border-3">
                 <p></p>
                 <div class="text-center mt-3 mb-3">
                     <a class="btn bg-info text-light" href="/order">SUPRISE ME</a>

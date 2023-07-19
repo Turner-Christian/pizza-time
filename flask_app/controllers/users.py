@@ -5,6 +5,8 @@ from flask_app.models.pizza import Pizza
 from flask_bcrypt import Bcrypt
 bcrypt = Bcrypt(app)
 
+# instead of index return all users not logged in to logout
+
 @app.route('/')
 def index():
     if 'logged_in' in session:
@@ -21,9 +23,12 @@ def home():
     if not 'order_count' in session:
         session['order_count'] = 0
     order_count = session['order_count']
-    data = { 'id': session['user_id'],}
+    data = { 'id': session['user_id']}
     user = User.user_logged_in(data)
-    return render_template('home.html', user=user, order_count=order_count)
+    favorite_pizza = User.get_favorite_pizza(data)
+    fav_pizza_id = { 'id' : favorite_pizza['favorite_pizza_id']}
+    fav_pizza_object = Pizza.get_one_pizza(fav_pizza_id)
+    return render_template('home.html', user=user, order_count=order_count, fav_pizza_object=fav_pizza_object)
 
 @app.route('/register', methods=['POST'])
 def register():
@@ -80,22 +85,36 @@ def order():
     user = User.user_logged_in(data)
     return render_template('order.html', user=user, order_count=order_count)
 
+@app.route('/reorder_fav')
+def reorder_fav():
+    data = {
+        ''
+    }
+    return render_template('order.html')
+
 @app.route('/order/submit', methods=['POST'])
 def order_submit():
     if not 'logged_in' in session:
         return redirect('/')
     session['order_count'] += 1
-    print(request.form)
+
+    cheese = request.form.get('cheese')
+    pepperoni = request.form.get('pepperoni')
+    mushroom = request.form.get('mushroom')
+    sausage = request.form.get('sausage')
+    onion = request.form.get('onion')
+    
+
     data = {
         'method': request.form['method'],
         'size': request.form['size'],
         'crust': request.form['crust'],
         'qty': request.form['qty'],
-        'cheese': request.form['cheese'],
-        'pepperoni': request.form['pepperoni'],
-        'mushroom' : request.form['mushroom'],
-        'sausage': request.form['sausage'],
-        'onion' : request.form['onion'],
+        'cheese': cheese,
+        'pepperoni': pepperoni,
+        'mushroom' : mushroom,
+        'sausage': sausage,
+        'onion' : onion,
         'user_id': request.form['user_id']
     }
     new_pizza = Pizza.create_pizza(data)
@@ -109,9 +128,57 @@ def cart():
     if not 'order_count' in session:
         session['order_count'] = 0
     order_count = session['order_count']
+
     data = { 'id': session['user_id'],}
     user = User.user_logged_in(data)
-    return render_template('cart.html', order_count=order_count, user=user)
+
+    pizzaData = {
+        'id': session['user_id'],
+        'order_count': order_count
+        }
+    
+    all_ordered_pizzas = Pizza.get_ordered_pizzas(pizzaData)
+    total_price = format(sum(float(pizza.price) for pizza in all_ordered_pizzas), '.2f')
+    return render_template('cart.html', order_count=order_count, user=user, all_ordered_pizzas=all_ordered_pizzas, total_price=total_price)
+
+@app.route('/account')
+def account():
+    if not 'logged_in' in session:
+        return redirect('/logout')
+    order_count = session['order_count']
+    data = { 'id': session['user_id']}
+    pizzaData = { 'id': session['user_id']}
+    user = User.user_logged_in(data)
+    print(data)
+    pizzas = Pizza.get_all_pizzas(pizzaData)
+    return render_template('account.html', order_count=order_count, user=user, pizzas=pizzas)
+
+@app.route('/account/update', methods=['POST'])
+def update_account():
+    if not 'logged_in' in session:
+        return redirect('/logout')
+    data = {
+        'first_name' : request.form['first_name'],
+        'last_name' : request.form['last_name'],
+        'email' : request.form['email'],
+        'address' : request.form['address'],
+        'city' : request.form['city'],
+        'state' : request.form['state'],
+        'id' : request.form['user_id'],
+    }
+    print(data)
+    updated_user = User.update_user(data)
+    return redirect('/home')
+
+@app.route('/favorite', methods=['POST'])
+def favorite():
+    print(request.form)
+    return redirect('/home')
+
+@app.route('/startover')
+def startover():
+    session.pop('order_count')
+    return redirect('/home')
 
 @app.route('/logout')
 def logout():
