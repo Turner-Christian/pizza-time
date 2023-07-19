@@ -1,22 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
     <title>Pizza Time</title>
 </head>
+
 <body class="container-md">
     <header class="d-flex justify-content-between">
         <h1>PIZZA PETE'S</h1>
         <h3 class="d-flex align-items-center"></h3>
         <nav class="d-flex align-items-center">
-            <a href="" class="border p-1 text-white bg-info text-decoration-none">HOME</a>
+            <a href="" class="border border-black p-1 text-white bg-info text-decoration-none">HOME</a>
             <a href="/cart" class="border p-1 text-decoration-none">ORDER(<span>{{order_count}}</span>)</a>
             <a href="/account" class="border p-1 text-decoration-none">ACCOUNT</a>
             <a href="/logout" class="border p-1 text-decoration-none">LOGOUT</a>
         </nav>
     </header>
+    <hr>
     <container>
         <h2 class="mt-5 text-center">QUICK OPTIONS</h2>
         <div class="d-flex justify-content-around mt-3">
@@ -30,29 +34,40 @@
                 </div>
             </div>
             <div class="card w-100 mx-2 border border-3">
-                <form action="" class="text-center mt-3 mb-3">
+                <form action="/reorder_fav" method="POST" class="text-center mt-3 mb-3">
                     {% for pizza in fav_pizza_object %}
-                    <ul class="list-unstyled card m-4">
-                        {{pizza.size.capitalize()}}
-                            {% if pizza.cheese == 'on' %}
-                                <li>Cheese</li> 
-                            {% endif %}
-                            {% if pizza.pepperoni == 'on' %}
-                                <li>Pepperoni</li>
-                            {% endif %}
-                            {% if pizza.mushroom == 'on' %}
-                                <li>Mushroom</li>
-                            {% endif %}
-                            {% if pizza.sausage == 'on' %}
-                                <li>Sausage</li> 
-                            {% endif %}
-                            {% if pizza.onion == 'on' %}
-                                <li>Onion</li> 
-                            {% endif %}
-                        </ul>
-                {% endfor %}
-                <a class="btn bg-info text-light" href="/order">RE-ORDER MY FAVORITE</a>
-            </form>
+                    <ul class="list-unstyled m-4">
+                        <p><strong>METHOD:</strong> {{pizza.method.capitalize()}}</p>
+                        <input type="hidden" name="method" value="{{pizza.method.capitalize()}}">
+                        <p><strong>SIZE:</strong> {{pizza.size.capitalize()}}</p>
+                        <input type="hidden" name="size" value="{{pizza.size.capitalize()}}">
+                        <p><strong>CRUST:</strong> {{pizza.crust.capitalize()}}</p>
+                        <input type="hidden" name="crust" value="{{pizza.crust.capitalize()}}">
+                        <p><strong>TOPPINGS:</strong></p>
+                        {% if pizza.cheese == 'on' %}
+                        <li>Cheese</li>
+                        <input type="hidden" name="cheese" value="{{pizza.cheese}}">
+                        {% endif %}
+                        {% if pizza.pepperoni == 'on' %}
+                        <li>Pepperoni</li>
+                        <input type="hidden" name="pepperoni" value="{{pizza.pepperoni}}">
+                        {% endif %}
+                        {% if pizza.mushroom == 'on' %}
+                        <li>Mushroom</li>
+                        <input type="hidden" name="mushroom" value="{{pizza.mushroom}}">
+                        {% endif %}
+                        {% if pizza.sausage == 'on' %}
+                        <li>Sausage</li>
+                        <input type="hidden" name="sausage" value="{{pizza.sausage}}">
+                        {% endif %}
+                        {% if pizza.onion == 'on' %}
+                        <li>Onion</li>
+                        <input type="hidden" name="onion" value="{{pizza.onion}}">
+                        {% endif %}
+                    </ul>
+                    {% endfor %}
+                    <input type="submit" class="btn bg-info text-light" value="RE-ORDER">
+                </form>
             </div>
             <div class="card w-100 mx-2 border border-3">
                 <p></p>
@@ -63,4 +78,5 @@
         </div>
     </container>
 </body>
+
 </html>

@@ -13,7 +13,7 @@
         <nav class="d-flex align-items-center">
             <a href="/home" class="border p-1 text-decoration-none">HOME</a>
             <a href="/cart" class="border p-1 text-decoration-none">ORDER(<span>{{order_count}}</span>)</a>
-            <a href="" class="border p-1 text-white bg-info text-decoration-none">ACCOUNT</a>
+            <a href="" class="border p-1 text-white bg-info text-decoration-none border-black">ACCOUNT</a>
             <a href="/logout" class="border p-1 text-decoration-none">LOGOUT</a>
         </nav>
     </header>
@@ -113,12 +113,13 @@
                         <header>
                             <h5>{{pizza.created_at.strftime("%B, %d, %Y")}}</h5>
                             <p><strong>DETAILS</strong></p>
+                        </header>
                             <hr>
+                        <section>
                             <p><strong>QTY:</strong> {{pizza.qty}}</p>
                             <p><strong>SIZE:</strong> {{pizza.size.capitalize()}}</p>
                             <p><strong>CRUST:</strong> {{pizza.crust.capitalize()}}</p>
                             <p><strong>TOPPINGS:</strong></p>
-                        </header>
                         <p>
                             {% if pizza.cheese == 'on' %}
                                 | Cheese 
@@ -135,9 +136,52 @@
                             {% if pizza.onion == 'on' %}
                                 | Onion 
                             {% endif %}</p>
+                        </section>
+                        <section class="form-check form-switch">
+                            <label for="flexSwitchCheckDefault"><strong>Favorite This Pizza?</strong></label>
+                            <input class="form-check-input favorite-checkbox" data-pizza-id="{{pizza.id}}" id="flexSwitchCheck{{pizza.id}}" type="checkbox">
+                        </section>
                     </div>
                 {% endfor %}
             </div>
         </section>
     </div>
+    <script>
+        // Get all the checkboxes with the common class
+        const checkboxes = document.querySelectorAll('.favorite-checkbox');
+    
+        // Add event listeners to each checkbox
+        checkboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', function() {
+                // If a checkbox is checked, uncheck all other checkboxes
+                if (this.checked) {
+                    checkboxes.forEach(otherCheckbox => {
+                        if (otherCheckbox !== this) {
+                            otherCheckbox.checked = false;
+                        }
+                    });
+                }
+                 // Store the state of the checkbox in local storage
+                localStorage.setItem(this.getAttribute('data-pizza-id'), this.checked);
+                // Send an AJAX request to update the favorite pizza
+                const pizzaId = this.getAttribute('data-pizza-id');
+                const isChecked = this.checked;
+                updateFavoritePizza(pizzaId, isChecked);
+            });
+        });
+    
+        // Function to send an AJAX request to update the favorite pizza
+        function updateFavoritePizza(pizzaId, isChecked) {
+            const xhr = new XMLHttpRequest();
+            xhr.open('POST', '/favoritepizza');
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            xhr.onload = function() {
+                if (xhr.status === 200) {
+                    // Handle the response if needed
+                }
+            };
+            xhr.send(JSON.stringify({ pizzaId: pizzaId, isChecked: isChecked }));
+        }
+    </script>
 </body>
+</html>

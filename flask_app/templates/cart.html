@@ -12,16 +12,17 @@
 
 <body class="container-md">
     <header class="d-flex justify-content-between">
-        <h1 class="px-4">PIZZA PETE'S</h1>
+        <h1 class="">PIZZA PETE'S</h1>
         <h3 class="d-flex text-center"></h3>
         <nav class="d-flex align-items-center">
             <a href="/home" class="border p-1 text-decoration-none">HOME</a>
             <a href=""
-                class="border p-1 text-white bg-info text-decoration-none">ORDER(<span>{{order_count}}</span>)</a>
+                class="border p-1 text-white bg-info text-decoration-none border-black">ORDER(<span>{{order_count}}</span>)</a>
             <a href="/account" class="border p-1 text-decoration-none">ACCOUNT</a>
             <a href="/logout" class="border p-1 text-decoration-none">LOGOUT</a>
         </nav>
     </header>
+    <hr>
     <container>
         <h2>YOUR ORDER</h2>
         <section>
@@ -57,11 +58,11 @@
                     {% endfor %}
                 </ul>
                 {% else %}
-                <p>No pizzas ordered yet. <a href="/order">Click here to start!</a></p>
+                <p class="align-self-center fs-4">No pizzas ordered yet. <a href="/order">Click here to start!</a></p>
                 {% endif %}
                 <div>
-                    <strong class="fs-3 text-info text-decoration-underline">Total: ${{total_price}}</strong>
-                    <div>
+                    <strong class="fs-3 text-info text-decoration-underline d-flex justify-content-end mx-3">Total: ${{total_price}}</strong>
+                    <div class="d-flex justify-content-end gap-3 mt-3">
                         <a class="btn px-3 bg-success text-light" href="/purchasecomplete">Purchase</a>
                         <a class="btn px-3 bg-danger text-light" href="/startover">Start Over</a>
                     </div>

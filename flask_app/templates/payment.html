@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,12 +8,19 @@
         integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
     <title>PAYMENT COMPLETE</title>
 </head>
+
 <body class="d-flex vh-100 justify-content-center align-items-center bg-dark">
-    <!-- <script>
-        setTimeout(function() {
+    <script>
+        setTimeout(function () {
             window.location.href = "http://localhost:5000/home";
-        }, 2000);
-    </script> -->
-    <h1 class="text-success fs-1">THANK YOU FOR YOUR PAYMENT!</h1>
+        }, 1500);
+    </script>
+    <div class="d-flex flex-column text-center">
+        <h1 class="text-success fs-1">THANK YOU FOR YOUR PAYMENT!</h1>
+        <div class="spinner-border text-success m-auto" role="status">
+            <span class="sr-only"></span>
+        </div>
+    </div>
 </body>
+
 </html>

@@ -1,8 +1,9 @@
-from flask import render_template,redirect,session,request,flash
+from flask import render_template,redirect,session,request,flash,jsonify
 from flask_app import app
 from flask_app.models.user import User
 from flask_app.models.pizza import Pizza
 from flask_bcrypt import Bcrypt
+
 bcrypt = Bcrypt(app)
 
 # instead of index return all users not logged in to logout
@@ -85,19 +86,35 @@ def order():
     user = User.user_logged_in(data)
     return render_template('order.html', user=user, order_count=order_count)
 
-@app.route('/reorder_fav')
+@app.route('/reorder_fav', methods=['POST'])
 def reorder_fav():
-    data = {
-        ''
+    cheese = request.form.get('cheese')
+    pepperoni = request.form.get('pepperoni')
+    mushroom = request.form.get('mushroom')
+    sausage = request.form.get('sausage')
+    onion = request.form.get('onion')
+
+    pizza_data = {
+        'method' : request.form['method'],
+        'size' : request.form['size'],
+        'crust' : request.form['crust'],
+        'cheese' : cheese,
+        'pepperoni' : pepperoni,
+        'mushroom' : mushroom,
+        'sausage' : sausage,
+        'onion' : onion
     }
-    return render_template('order.html')
+    order_count = session['order_count']
+    user_data = { 'id': session['user_id'],}
+    user = User.user_logged_in(user_data)
+    print(pizza_data)
+    return render_template('order.html', pizza_data=pizza_data, user=user, order_count=order_count)
 
 @app.route('/order/submit', methods=['POST'])
 def order_submit():
     if not 'logged_in' in session:
         return redirect('/')
     session['order_count'] += 1
-
     cheese = request.form.get('cheese')
     pepperoni = request.form.get('pepperoni')
     mushroom = request.form.get('mushroom')
@@ -149,7 +166,6 @@ def account():
     data = { 'id': session['user_id']}
     pizzaData = { 'id': session['user_id']}
     user = User.user_logged_in(data)
-    print(data)
     pizzas = Pizza.get_all_pizzas(pizzaData)
     return render_template('account.html', order_count=order_count, user=user, pizzas=pizzas)
 
@@ -174,6 +190,21 @@ def update_account():
 def favorite():
     print(request.form)
     return redirect('/home')
+
+@app.route('/favoritepizza', methods=['POST'])
+def favoritepizza():
+    data = {
+        'pizza_id': request.json['pizzaId'],
+        'user_id': session['user_id']
+    }
+    User.update_favorite_pizza(data)
+    return jsonify(success=True)
+
+
+@app.route('/purchasecomplete')
+def purchasecomplete():
+    session.pop('order_count')
+    return render_template('payment.html')
 
 @app.route('/startover')
 def startover():

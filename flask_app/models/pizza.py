@@ -74,10 +74,10 @@ class Pizza:
     def get_all_pizzas(cls, data):
         query = """
         SELECT * FROM pizzas
-        WHERE user_id = %(id)s;
+        WHERE user_id = %(id)s
+        ORDER BY created_at DESC;
         """
         result = MySQLConnection(cls.DB).query_db(query, data)
-        print(result)
         all_pizzas = []
         for pizza in result:
             all_pizzas.append(cls(pizza))
