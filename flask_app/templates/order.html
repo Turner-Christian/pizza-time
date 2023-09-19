@@ -10,28 +10,37 @@
     <title>Order(s)</title>
 </head>
 
-<body class="container-md">
+<body class="container-md bg-dark text-light">
     <header class="d-flex justify-content-between">
         <h1 class="px-4">PIZZA PETE'S</h1>
         <h3 class="d-flex text-center"></h3>
         <nav class="d-flex align-items-center">
-            <a href="/home" class="border p-1 text-decoration-none">HOME</a>
+            <a href="/home" class="border p-1 text-decoration-none bg-white">HOME</a>
             <a href="/cart"
-                class="border p-1 text-white bg-info text-decoration-none border-black">ORDER(<span>{{order_count}}</span>)</a>
-            <a href="/account" class="border p-1 text-decoration-none">ACCOUNT</a>
-            <a href="/logout" class="border p-1 text-decoration-none">LOGOUT</a>
+                class="border p-1 text-white border-black bg-info text-decoration-none border-black">ORDER(<span>{{order_count}}</span>)</a>
+            <a href="/account" class="border p-1 text-decoration-none bg-white">ACCOUNT</a>
+            <a href="/logout" class="border p-1 text-decoration-none bg-white">LOGOUT</a>
         </nav>
     </header>
     <hr>
-    <container class="">
+    <container class="text-dark bg-secondary-subtle">
         <h2 class="text-center">CRAFT-A-PIZZA</h2>
         <form action="/order/submit" method="POST" class="border p-5 rounded bg-light">
+            {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul class="list-unstyled">
+                {% for message in messages %}
+                    <li class="bg-danger-subtle border rounded">{{message}}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
             <label class="form-label" for="method">METHOD:</label>
             <select class="form-control" name="method" id="method">
                 {% if pizza_data %}
                 <option selected hidden value="{{pizza_data.method}}">{{pizza_data.method}}</option>
                 {% else %}
-                <option selected hidden value="...">...</option>
+                <option selected hidden>...</option>
                 {% endif %}
                 <option value="curbside">Curbside</option>
                 <option value="pickup">Pickup</option>
@@ -44,7 +53,7 @@
                         {% if pizza_data %}
                         <option selected hidden value="{{pizza_data.size}}">{{pizza_data.size}}</option>
                         {% else %}
-                        <option selected hidden value="...">...</option>
+                        <option selected hidden>...</option>
                         {% endif %}
                         <option value="small">Small</option>
                         <option value="medium">Medium</option>
@@ -58,7 +67,7 @@
                         {% if pizza_data %}
                         <option selected hidden value="{{pizza_data.crust}}">{{pizza_data.crust}}</option>
                         {% else %}
-                        <option selected hidden value="...">...</option>
+                        <option selected hidden>...</option>
                         {% endif %}
                         <option value="thin">Thin</option>
                         <option value="thick">Thick</option>
@@ -67,7 +76,7 @@
                 </div>
                 <div class="flex-fill">
                     <label class="form-label" for="qty">QTY:</label>
-                    <input class="form-control" name="qty" type="number" max="20" min="1">
+                    <input class="form-control" name="qty" type="number" max="20" min="1" value="0">
                     <input type="hidden" name="user_id" value="{{user.id}}">
                 </div>
             </div>
@@ -104,5 +113,4 @@
         </form>
     </container>
 </body>
-
 </html>

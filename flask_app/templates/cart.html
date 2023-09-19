@@ -10,16 +10,16 @@
     <title>Document</title>
 </head>
 
-<body class="container-md">
+<body class="container-md bg-dark text-white">
     <header class="d-flex justify-content-between">
         <h1 class="">PIZZA PETE'S</h1>
         <h3 class="d-flex text-center"></h3>
         <nav class="d-flex align-items-center">
-            <a href="/home" class="border p-1 text-decoration-none">HOME</a>
+            <a href="/home" class="border p-1 text-decoration-none bg-white">HOME</a>
             <a href=""
-                class="border p-1 text-white bg-info text-decoration-none border-black">ORDER(<span>{{order_count}}</span>)</a>
-            <a href="/account" class="border p-1 text-decoration-none">ACCOUNT</a>
-            <a href="/logout" class="border p-1 text-decoration-none">LOGOUT</a>
+                class="border border-black p-1 text-white bg-info text-decoration-none border-black">ORDER(<span>{{order_count}}</span>)</a>
+            <a href="/account" class="border p-1 text-decoration-none bg-white">ACCOUNT</a>
+            <a href="/logout" class="border p-1 text-decoration-none bg-white">LOGOUT</a>
         </nav>
     </header>
     <hr>
@@ -29,7 +29,7 @@
             <div class="border p-4 rounded">
                 {% if all_ordered_pizzas %}
                 <h3>Ordered Pizzas:</h3>
-                <ul>
+                <ul class="">
                     {% for pizza in all_ordered_pizzas %}
                     <li class="list-unstyled border p-4 rounded mt-4">
                         <strong>Method:</strong> {{ pizza.method.capitalize() }}<br>

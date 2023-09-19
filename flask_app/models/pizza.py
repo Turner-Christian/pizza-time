@@ -1,6 +1,6 @@
 from flask_app.config.mysqlconnection import MySQLConnection
 from flask_app import app
-
+from flask import flash
 
 class Pizza:
     DB = 'pizza_time_schema' 
@@ -107,3 +107,19 @@ class Pizza:
             # all_ordered_pizzas.append(pizza)
         return all_ordered_pizzas
     
+    @staticmethod
+    def order_vald(input):
+        is_valid = True
+        if input['method'] == '...':
+            flash('Method Required')
+            is_valid = False
+        if input['crust'] == '...':
+            flash('Crust Required')
+            is_valid = False
+        if input['size'] == '...':
+            flash('Size Required')
+            is_valid = False
+        if input['qty'] == '':
+            flash('Qty Required')
+            is_valid = False
+        return is_valid

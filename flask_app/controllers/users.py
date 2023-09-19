@@ -6,7 +6,8 @@ from flask_bcrypt import Bcrypt
 
 bcrypt = Bcrypt(app)
 
-# instead of index return all users not logged in to logout
+# STYLE STYLE STYLE
+# IMPLEMENT RANDOM ORDER
 
 @app.route('/')
 def index():
@@ -112,8 +113,12 @@ def reorder_fav():
 
 @app.route('/order/submit', methods=['POST'])
 def order_submit():
+    print(request.form)
+
     if not 'logged_in' in session:
         return redirect('/')
+    if not Pizza.order_vald(request.form):
+        return redirect('/order')
     session['order_count'] += 1
     cheese = request.form.get('cheese')
     pepperoni = request.form.get('pepperoni')

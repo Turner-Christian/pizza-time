@@ -9,15 +9,15 @@
     <title>Pizza Time</title>
 </head>
 
-<body class="container-md">
+<body class="container-md bg-dark text-white">
     <header class="d-flex justify-content-between">
         <h1>PIZZA PETE'S</h1>
         <h3 class="d-flex align-items-center"></h3>
         <nav class="d-flex align-items-center">
-            <a href="" class="border border-black p-1 text-white bg-info text-decoration-none">HOME</a>
-            <a href="/cart" class="border p-1 text-decoration-none">ORDER(<span>{{order_count}}</span>)</a>
-            <a href="/account" class="border p-1 text-decoration-none">ACCOUNT</a>
-            <a href="/logout" class="border p-1 text-decoration-none">LOGOUT</a>
+            <a href="" class="border-black p-1 text-white bg-info text-decoration-none">HOME</a>
+            <a href="/cart" class="border p-1 text-decoration-none bg-white">ORDER(<span>{{order_count}}</span>)</a>
+            <a href="/account" class="border p-1 text-decoration-none bg-white">ACCOUNT</a>
+            <a href="/logout" class="border p-1 text-decoration-none bg-white">LOGOUT</a>
         </nav>
     </header>
     <hr>
@@ -69,14 +69,17 @@
                     <input type="submit" class="btn bg-info text-light" value="RE-ORDER">
                 </form>
             </div>
-            <div class="card w-100 mx-2 border border-3">
-                <p></p>
-                <div class="text-center mt-3 mb-3">
-                    <a class="btn bg-info text-light" href="/order">SUPRISE ME</a>
+            <div class="card w-100 mx-2 border border-3 ">
+                <div class="text-center mt-3 mb-3 d-flex flex-column justify-content-end">
+                    <div class="text-center">
+                        <strong class="fs-2">Creates a Random Pizza!</strong>
+                    </div>
+                    <div class="align-items-end">
+                        <a class="btn bg-info text-light" href="/order" id="surpriseMeBtn">SUPRISE ME</a>
+                    </div>
                 </div>
             </div>
         </div>
     </container>
 </body>
-
 </html>
